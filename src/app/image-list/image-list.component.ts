@@ -20,7 +20,6 @@ export class ImageListComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
 
     if (this.photos) {
-      debugger
       this.filteredPhotoFeed(changes.authorNameSearchString.currentValue);
     }
 
@@ -39,7 +38,6 @@ export class ImageListComponent implements OnInit {
 
 
   filteredPhotoFeed(newObj) {
-    debugger
     var nameSearchString = newObj;
     if(!nameSearchString){
       this.photos = this.photoFeed
