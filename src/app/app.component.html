@@ -1,0 +1,21 @@
+<header>
+  <h1>Fotos</h1>
+</header>
+
+<div id="app-instasearch">
+
+  <div class="input-container">
+    <input type="text" placeholder="Buscar" [ngModel]="authorNameSearchString" (ngModelChange)="filteredPhotoFeed($event)"/>
+  </div>
+
+  <ul>
+    <virtual-scroller #scroll [items]="photos">
+      <li class="photo" *ngFor="let photo of scroll.viewPortItems">
+        <img [src]="photo.photo" />
+        <span class="text">{{ photo.text }}</span>
+      </li>
+  </virtual-scroller>
+  </ul>
+  <!--<app-image-list [authorNameSearchString]="authorNameSearchString"></app-image-list>-->
+
+</div>

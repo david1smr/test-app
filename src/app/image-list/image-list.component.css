@@ -1,0 +1,22 @@
+.photo {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 200px auto;
+    margin-top: 20px;
+    align-items: center;
+    background-color: #e9edf0;
+    padding: 30px 50px;
+    border-radius: 5px;
+    border: 1px solid #e3e3e3;
+}
+
+.text {
+    font-size: 25px;
+    margin-left: 20px;
+    color: #75818e;
+}
+
+.photo img {
+    border-radius: 5px;
+    width: 200px;
+}
