@@ -1,19 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Photo } from './photo'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
 
-  title = 'test-app';
-  authorNameSearchString: String;
-  photoFeed: any[];
-  photos: any[];
+export class AppComponent implements OnInit{
 
+  public authorNameSearchString: string;
+  public photos: Photo[];
+
+  private photoFeed: Photo[];
 
   constructor(private httpService: HttpClient) {
   }
@@ -32,14 +33,14 @@ export class AppComponent {
   }
 
 
-  filteredPhotoFeed(newObj) {
-    var nameSearchString = newObj;
+  public filteredPhotoFeed(searchTerm: string): Photo[] {
+  const nameSearchString = searchTerm;
     if(!nameSearchString){
       this.photos = this.photoFeed
       return this.photoFeed;
     }
-    let searchString = nameSearchString.trim().toLowerCase();
-    this.photos = this.photoFeed.filter(function(item){
+    const searchString = nameSearchString.trim().toLowerCase();
+    this.photos = this.photoFeed.filter((item) => {
       if(item.text.toLowerCase().indexOf(searchString) !== -1 || item.id.toString().toLowerCase().indexOf(searchString) !== -1){
         return item;
       }
