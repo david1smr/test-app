@@ -5,17 +5,8 @@
 <div>
 
   <div class="input-container">
-    <input type="text" placeholder="Buscar" [ngModel]="authorNameSearchString" (ngModelChange)="filteredPhotoFeed($event)"/>
+    <input type="text" placeholder="Buscar" [ngModel]="searchTerm" (ngModelChange)="searchInput($event)"/>
   </div>
-
-  <ul>
-    <virtual-scroller #scroll [items]="photos">
-      <li class="photo" *ngFor="let photo of scroll.viewPortItems">
-        <img [src]="photo.photo" />
-        <span class="text">{{ photo.text }}</span>
-      </li>
-  </virtual-scroller>
-  </ul>
-  <!--<app-image-list [authorNameSearchString]="authorNameSearchString"></app-image-list>-->
+  <app-image-list></app-image-list>
 
 </div>

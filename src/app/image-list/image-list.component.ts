@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SimpleChanges } from '@angular/core';
+import {SearchService } from './../search.service'
+import { Photo } from './../photo'
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-image-list',
@@ -10,20 +12,17 @@ import { SimpleChanges } from '@angular/core';
 })
 export class ImageListComponent implements OnInit {
 
-  @Input() authorNameSearchString: string;
+  public searchString: string;
+  public photos: Photo[];
 
-  photoFeed: any[];
-  photos: any[];
+  private subscription: Subscription;
+  private photoFeed: Photo[];
 
-  constructor(private httpService: HttpClient) {
+  constructor(private httpService: HttpClient, private searchService: SearchService) {
+    this.subscription = this.searchService.getString()
+    .subscribe(searchTerm => this.filteredPhotos(searchTerm))
   }
-  ngOnChanges(changes: SimpleChanges) {
-
-    if (this.photos) {
-      this.filteredPhotoFeed(changes.authorNameSearchString.currentValue);
-    }
-
-  }
+ 
   ngOnInit () {
     this.httpService.get('./../assets/MOCK_DATA.json').subscribe(
       data => {
@@ -37,19 +36,23 @@ export class ImageListComponent implements OnInit {
   }
 
 
-  filteredPhotoFeed(newObj) {
-    var nameSearchString = newObj;
-    if(!nameSearchString){
+  private filteredPhotos(searchTerm: string): Photo[] {
+    const searchTermString = searchTerm;
+    if(!searchTermString){
       this.photos = this.photoFeed
       return this.photoFeed;
     }
-    let searchString = nameSearchString.trim().toLowerCase();
-    this.photos = this.photoFeed.filter(function(item){
+    const searchString = searchTermString.trim().toLowerCase();
+    this.photos = this.photoFeed.filter((item) => {
       if(item.text.toLowerCase().indexOf(searchString) !== -1 || item.id.toString().toLowerCase().indexOf(searchString) !== -1){
         return item;
       }
     })
     return this.photos;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

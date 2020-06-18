@@ -1,4 +1,5 @@
-<div>aaaa
+<div>
+  {{searchString}}
     <virtual-scroller #scroll [items]="photos">
       <li class="photo" *ngFor="let photo of scroll.viewPortItems">
         <img [src]="photo.photo" />
