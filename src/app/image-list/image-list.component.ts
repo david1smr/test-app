@@ -14,6 +14,7 @@ export class ImageListComponent implements OnInit {
 
   public searchString: string;
   public photos: Photo[];
+  public isDataAvailable: boolean = false;
 
   private subscription: Subscription;
   private photoFeed: Photo[];
@@ -26,7 +27,7 @@ export class ImageListComponent implements OnInit {
   ngOnInit () {
     this.httpService.get('./../assets/MOCK_DATA.json').subscribe(
       data => {
-        this.photoFeed = data as any [];
+        this.photoFeed = data as Photo [];
       },
       (err: HttpErrorResponse) => {
         console.log (err.message);
