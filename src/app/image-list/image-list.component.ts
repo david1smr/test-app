@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse } from '@angular/common/http';
-import {SearchService } from './../search.service'
+import { SearchService } from './../search.service'
 import { Photo } from './../photo'
 import { Subscription } from "rxjs";
+import { MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-image-list',
@@ -14,34 +15,35 @@ export class ImageListComponent implements OnInit {
 
   public searchString: string;
   public photos: Photo[];
-  public isDataAvailable: boolean = false;
 
   private subscription: Subscription;
   private photoFeed: Photo[];
 
-  constructor(private httpService: HttpClient, private searchService: SearchService) {
+  constructor(private httpService: HttpClient, private searchService: SearchService, private snackBar: MatSnackBar) {
     this.subscription = this.searchService.getString()
-    .subscribe(searchTerm => this.filteredPhotos(searchTerm))
+    .subscribe(searchTerm => this.filteredPhotos(searchTerm));
   }
  
   ngOnInit () {
     this.httpService.get('./../assets/MOCK_DATA.json').subscribe(
       data => {
         this.photoFeed = data as Photo [];
-        this.filteredPhotos("")
+        this.filteredPhotos("");
       },
       (err: HttpErrorResponse) => {
-        console.log (err.message);
+        this.snackBar.open(err.message, '', {
+          duration: 2000,
+        });
       }
     );
-    this.photos = this.photoFeed
+    this.photos = this.photoFeed;
   }
 
 
   private filteredPhotos(searchTerm: string): Photo[] {
     const searchTermString = searchTerm;
     if(!searchTermString){
-      this.photos = this.photoFeed
+      this.photos = this.photoFeed;
       return this.photoFeed;
     }
     const searchString = searchTermString.trim().toLowerCase();

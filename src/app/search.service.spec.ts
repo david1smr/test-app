@@ -1,16 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-
 import { SearchService } from './search.service';
-
 describe('SearchService', () => {
   let service: SearchService;
-
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(SearchService);
+    TestBed.configureTestingModule({ providers: [SearchService] });
+    service = TestBed.get(SearchService);
   });
-
-  it('should be created', () => {
+  it('can load instance', () => {
     expect(service).toBeTruthy();
   });
 });

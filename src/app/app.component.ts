@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Photo } from './photo'
 import {SearchService } from './search.service'
 
 @Component({
@@ -10,19 +7,14 @@ import {SearchService } from './search.service'
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit{
+export class AppComponent{
 
   public searchTerm: string;
 
-  constructor(private httpService: HttpClient, private searchService: SearchService) {
+  constructor(private searchService: SearchService) {
   }
-
-
-  ngOnInit () {
-  }
-
 
   public searchInput(searchTerm: string) {
-    this.searchService.updateString(searchTerm)
+    this.searchService.updateString(searchTerm);
   }
 }
