@@ -28,6 +28,7 @@ export class ImageListComponent implements OnInit {
     this.httpService.get('./../assets/MOCK_DATA.json').subscribe(
       data => {
         this.photoFeed = data as Photo [];
+        this.filteredPhotos("")
       },
       (err: HttpErrorResponse) => {
         console.log (err.message);

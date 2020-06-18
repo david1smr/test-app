@@ -3,7 +3,7 @@
     <virtual-scroller #scroll [items]="photos">
       <li class="photo" *ngFor="let photo of scroll.viewPortItems">
         <img [src]="photo.photo" />
-        <span class="text">{{ photo.text }}</span>
+        <span class="text">{{ photo.text}}</span>
       </li>
   </virtual-scroller>
 </div>
